@@ -13,4 +13,7 @@ export const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
   namedPlaceholders: true,
+  ssl: {
+    rejectUnauthorized: false   // ده اللي بيحل مشكلة TiDB Cloud
+  }
 });
