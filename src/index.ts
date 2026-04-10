@@ -6,11 +6,10 @@ import { authRouter } from './routes/authRoutes.js';
 import { metaRouter } from './routes/metaRoutes.js';
 import { ticketRouter } from './routes/ticketRoutes.js';
 
-dotenv.config(); // ✅ ممتاز
+dotenv.config();
 
 const app = express();
 
-// ✅ انقل console.log هنا بعد db.js
 console.log('DB_USER:', process.env.DB_USER);
 console.log('DB_NAME:', process.env.DB_NAME);
 
@@ -20,10 +19,9 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json({ limit: '2mb' }));
+app.use(express.json({ limit: '10mb' })); // increased for base64 images
 app.use(cookieParser());
 
-// ✅ أو هنا بعد الـ health check
 app.get('/api/health', async (_req, res) => {
   try {
     const { pool } = await import('./db.js');
@@ -40,7 +38,6 @@ app.use('/api', ticketRouter);
 
 const port = Number(process.env.PORT || 4000);
 
-// ✅ هذا الكود صحيح تماماً
 (async function verifyDb() {
   try {
     const { pool } = await import('./db.js');
